@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'signin.dart';
+import 'createaccount.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -19,8 +20,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
-      routes: {SecondPage.routename: (_) => SecondPage()},
+      home:const MainPage(),
+      routes: {SecondPage.routename: (_) => SecondPage(),
+      ThirdPage.routename:(_)=>ThirdPage(),
+      },
     );
   }
 }
@@ -33,14 +36,24 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final texts = const TextStyle(
+    color: Colors.blue,
+    fontSize: 20,
+  );
+  final elevated = OutlinedButton.styleFrom(
+    minimumSize: const Size(300, 50),
+    backgroundColor: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(32),
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("images/back.png"),
-          fit: BoxFit.cover
-        ),
+            image: AssetImage("images/back.png"), fit: BoxFit.cover),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -84,18 +97,48 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ],
               ),
-              TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.person),
-                label: const Text("Sign In"),
+              const SizedBox(
+                height: 25,
               ),
-              TextButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.person),
-                label: const Text("Create Account"),
+              OutlinedButton(
+                style: elevated,
+                onPressed: () {
+                  Navigator.of(context).pushNamed(SecondPage.routename);
+                },
+                child: const Text(
+                  "Sign In",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               Container(
-                height: 120,
+                padding: const EdgeInsets.all(10),
+                child: const Text(
+                  "OR",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              OutlinedButton(
+                style: elevated,
+                onPressed: () {
+                  Navigator.of(context).pushNamed(ThirdPage.routename);
+                },
+                child: const Text(
+                  "Create Account",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Container(
+                height: 60,
               ),
               Container(
                 padding: const EdgeInsets.all(15),
@@ -120,7 +163,7 @@ class _MainPageState extends State<MainPage> {
             color: Colors.white,
             icon: const Icon(Icons.home),
             onPressed: () {
-              Navigator.of(context).pushNamed(SecondPage.routename);
+              
             },
           ),
         ),

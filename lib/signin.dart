@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login_page/createaccount.dart';
 import 'main.dart';
 
 class SecondPage extends StatefulWidget {
@@ -13,9 +14,10 @@ class _SecondPageState extends State<SecondPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Signin(),
+      home: const Signin(),
       routes: {
-        MyApp.routename: (_) => MyApp(),
+        MyApp.routename: (_) => const MyApp(),
+        ThirdPage.routename: (_) => ThirdPage(),
       },
     );
   }
@@ -31,7 +33,11 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
-
+  final shape = RoundedRectangleBorder(
+    borderRadius: BorderRadius.circular(32),
+  );
+  bool value = false;
+  bool password = true;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -58,7 +64,7 @@ class _SigninState extends State<Signin> {
               const SizedBox(
                 height: 80,
               ),
-              Container(
+              SizedBox(
                 width: 300,
                 child: TextField(
                   controller: emailcontroller,
@@ -103,101 +109,134 @@ class _SigninState extends State<Signin> {
                     label: const Text("Password"),
                     prefixIcon: const Icon(Icons.vpn_key),
                     suffixIcon: IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () => passwordcontroller.clear(),
+                      icon: const Icon(Icons.visibility),
+                      onPressed: () {
+                        setState(() {
+                          password = !password;
+                        });
+                      },
                     ),
                   ),
+                  obscureText: password,
                 ),
               ),
               const SizedBox(
                 height: 10,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Spacer(),
-                  Container(
-                    padding: const EdgeInsets.all(5),
-                    child: TextButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(Icons.radio_button_off),
-                      label: const Text("Remember Password"),
+              Container(
+                padding: const EdgeInsets.only(left: 23),
+                child: ListTile(
+                  leading: Checkbox(
+                    value: value,
+                    onChanged: (value) {
+                      setState(() {
+                        this.value = value!;
+                      });
+                    },
+                  ),
+                  title: const Text(
+                    "Remeber Password",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
                     ),
                   ),
-                  const Spacer(),
-                  Container(
-                    width: 50,
-                  ),
-                  const Spacer()
-                ],
+                ),
               ),
               Row(
                 children: [
                   const Spacer(),
                   ElevatedButton(
-                    onPressed: () {},
-                    child: const Text("Sign In"),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(120, 50),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 5),
+                      shape: shape,
+                      primary: const Color(0xFF1475FF),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        emailcontroller.clear();
+                        passwordcontroller.clear();
+                      });
+                    },
+                    child: const Text(
+                      "Sign In",
+                      style: TextStyle(fontSize: 18),
+                    ),
                   ),
                   const Spacer(),
                   OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      minimumSize: const Size(160, 50),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 5),
+                      shape: shape,
+                      side: const BorderSide(
+                        color: Color(0xFF1475FF),
+                        width: 3,
+                      ),
+                    ),
                     onPressed: () {},
-                    child: const Text("Forget Password"),
+                    child: const Text(
+                      "Forget Password",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF1475FF),
+                      ),
+                    ),
                   ),
                   const Spacer(),
                 ],
               ),
               const SizedBox(
-                height: 45,
+                height: 25,
               ),
               const Text(
                 "Sign in with Social Media",
                 style: TextStyle(
                     color: Colors.black,
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(
-                    Icons.facebook,
-                    size: 50,
-                    color: Colors.blue,
-                  ),
-                  Icon(
-                    Icons.account_circle_sharp,
-                    size: 50,
-                    color: Colors.blue,
-                  ),
-                  Icon(
-                    Icons.circle_notifications_outlined,
-                    size: 50,
-                    color: Colors.blue,
-                  ),
+                children: [
+                  Image.asset("images/facebook.png"),
+                  Image.asset("images/twiter.png"),
+                  Image.asset("images/linkdin.png"),
                 ],
               ),
               const SizedBox(
-                height: 50,
+                height: 33,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     "Don't Have account?",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                     ),
                   ),
-                  Text(
-                    " Sign Up",
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(ThirdPage.routename);
+                    },
+                    child: const Text(
+                      "Sign Up",
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.account_circle,
                     size: 30,
                     color: Colors.white,

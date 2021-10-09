@@ -66,6 +66,11 @@ flutter:
     - images/art.jpg
     - images/back.png
     - images/back2.png
+    - images/homeback.png
+    - images/facebook.png
+    - images/twiter.png
+    - images/linkdin.png
+
 
 
 
